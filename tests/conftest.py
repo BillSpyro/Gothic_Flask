@@ -1,5 +1,5 @@
 import pytest
-from gothic_flask import create_app
+from Gothic_Flask import create_app
 
 
 @pytest.fixture
