@@ -1,4 +1,4 @@
-from Gothic_Flask import create_app
+from gothic_flask import create_app
 
 def test_config():
     assert not create_app().testing

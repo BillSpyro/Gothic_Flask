@@ -1,1 +1,1 @@
-web: gunicorn "Gothic_Flask:create_app()"
+web: gunicorn "gothic_flask:create_app()"
