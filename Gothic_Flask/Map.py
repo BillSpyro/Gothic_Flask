@@ -1,8 +1,8 @@
 from sys import exit
 from random import randint
 from textwrap import dedent
-from Items import *
-from Characters import *
+from items import *
+from characters import *
 
 #Base Area
 class area(object):

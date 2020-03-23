@@ -1,5 +1,5 @@
-import Engine
-import Map
+import engine
+import map
 
 #   Gothic          #
 #   Max Crandall    #
