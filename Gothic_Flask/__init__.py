@@ -35,13 +35,7 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
-    # Extra routes
-    @app.route('/Intro')
-    def intro():
-        return 'Intro to the game'
-
-    @app.route('/Game/<area>')
-    def area(area=None):
-        return render_template('Wrong.html', area=area)
+    from . import game
+    app.register_blueprint(game.bp)
 
     return app

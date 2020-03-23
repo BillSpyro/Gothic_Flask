@@ -1,8 +1,8 @@
 from sys import exit
 from random import randint
 from textwrap import dedent
-from items import *
-from characters import *
+from Gothic_Flask.Items import *
+from Gothic_Flask.Characters import *
 
 #Base Area
 class area(object):
@@ -427,16 +427,7 @@ class Death(area):
 #Intro Area
 class Intro(area):
 
-    def enter(self):
-        print(dedent("""
-            You have awakened.....
-            As you get up, you look around.
-            The area you are in seems to be an underground crypt.
-            As you raise your hands you see skeletal fingers.
-            You are in the form of an undead skeleton.
-            """))
-
-        return 'main_crypt'
+    pass
 
 class MainCrypt(area):
 

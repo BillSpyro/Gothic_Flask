@@ -1,0 +1,18 @@
+html {
+  font-family: sans-serif;
+  background: #eee;
+  padding: 1rem;
+}
+
+body {
+  max-width: 90%;
+  background: white;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  width: 90%;
+}

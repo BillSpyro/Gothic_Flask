@@ -1,0 +1,15 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Intro-</h1>
+  <p>
+    You have awakened.....
+    As you get up, you look around.
+    The area you are in seems to be an underground crypt.
+    As you raise your hands you see skeletal fingers.
+    You are in the form of an undead skeleton.
+  </p>
+  <ul>
+    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Continue"</a></li>
+  </ul>
+</nav>

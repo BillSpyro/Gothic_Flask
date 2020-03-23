@@ -1,0 +1,18 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Main Crypt-</h1>
+  <p>
+    From where you are there are two hallways. One to
+    the left and one to the right. There is also a gate
+    with a stairwell behind it leading upwards.
+  </p>
+  <ul>
+{% if not copper_shield %}
+    <li><a href="{{ url_for('game.take_copper_shield') }}"><input type="button" value="Take copper shield"</a></li>
+{% endif %}
+    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Go down the left hallway"</a></li>
+    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Go down the right hallway"</a></li>
+    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Go to the gate"</a></li>
+  </ul>
+</nav>
