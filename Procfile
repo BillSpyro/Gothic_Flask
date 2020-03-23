@@ -1,1 +1,1 @@
-web: gunicorn hello:app
+web: gunicorn --chdir Gothic_Flask hello:app
