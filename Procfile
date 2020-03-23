@@ -1,1 +1,1 @@
-web: gunicorn --chdir Gothic_Flask hello:app
+web: gunicorn "Gothic_Flask:create_app()"
