@@ -1,0 +1,11 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Death-</h1>
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+    <li><a href="{{ url_for('game.death') }}"><input type="button" value="Back to the beginning"></a></li>
+  </ul>
+</nav>

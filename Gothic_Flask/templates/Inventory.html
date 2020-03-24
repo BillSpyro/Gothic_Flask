@@ -1,0 +1,39 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Inventory-</h1>
+  <ul>
+    <li>Health: {{ health }}</li>
+    <li>Gold: {{ gold }}</li>
+    {% if copper_shield %}
+    <li>Copper Shield Durability: {{ copper_shield_durability }}</li>
+    {% endif %}
+    {% if silver_shield %}
+    <li>Silver Shield Durability: {{ silver_shield_durability }}</li>
+    {% endif %}
+    {% if small_sword %}
+    <li>Small Sword</li>
+    {% endif %}
+    {% if club %}
+    <li>Club</li>
+    {% endif %}
+    {% if war_hammer %}
+    <li>War Hammer</li>
+    {% endif %}
+    {% if life_bottle_amount > 0 %}
+    <li>Life Bottles: {{ life_bottle_amount }}</li>
+    {% endif %}
+    {% if energy_vile_amount > 0 %}
+    <li>Energy Viles: {{ energy_vile_amount }}</li>
+    {% endif %}
+    {% if crypt_key %}
+    <li>Crypt Key</li>
+    {% endif %}
+    {% if graveyard_key %}
+    <li>Graveyard Key</li>
+    {% endif %}
+    {% if skull_key %}
+    <li>Skull Key</li>
+    {% endif %}
+  </ul>
+</nav>

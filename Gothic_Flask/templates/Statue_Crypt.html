@@ -1,0 +1,22 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Statue Crypt-</h1>
+  <p>
+    As you enter the room, you see a statue of a hero.
+    The statue is posing heroically, a sign next to the
+    statue reads 'The great hero Karl Sturnguard whom has
+    slain the last of the demons.'
+  </p>
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+{% if not small_sword %}
+    <li><a href="{{ url_for('game.statue_crypt_take_small_sword') }}"><input type="button" value="Take small sword"></a></li>
+{% endif %}
+    <li><a href="{{ url_for('game.statue_crypt_desecrate_the_statue') }}"><input type="button" value="Desecrate the statue"></a></li>
+    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Go back"></a></li>
+  </ul>
+</nav>
+<a href="{{ url_for('game.inventory') }}"><input type="button" value="Inventory"></a>

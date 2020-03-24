@@ -7,12 +7,16 @@
     the left and one to the right. There is also a gate
     with a stairwell behind it leading upwards.
   </p>
+  <p class="message">
+    {{ message }}
+  </p>
   <ul>
 {% if not copper_shield %}
-    <li><a href="{{ url_for('game.take_copper_shield') }}"><input type="button" value="Take copper shield"</a></li>
+    <li><a href="{{ url_for('game.main_crypt_take_copper_shield') }}"><input type="button" value="Take copper shield"></a></li>
 {% endif %}
-    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Go down the left hallway"</a></li>
-    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Go down the right hallway"</a></li>
-    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Go to the gate"</a></li>
+    <li><a href="{{ url_for('game.statue_crypt') }}"><input type="button" value="Go down the left hallway"></a></li>
+    <li><a href="{{ url_for('game.waterway_crypt') }}"><input type="button" value="Go down the right hallway"></a></li>
+    <li><a href="{{ url_for('game.gate_crypt') }}"><input type="button" value="Go to the gate"></a></li>
   </ul>
 </nav>
+<a href="{{ url_for('game.inventory') }}"><input type="button" value="Inventory"></a>

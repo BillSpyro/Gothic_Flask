@@ -28,7 +28,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        return 'Flask Heroku Demo'
+        return render_template('Game.html')
 
     # a simple page that says hello
     @app.route('/hello')
