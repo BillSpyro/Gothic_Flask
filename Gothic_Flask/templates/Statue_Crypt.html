@@ -8,6 +8,11 @@
     statue reads 'The great hero Karl Sturnguard whom has
     slain the last of the demons.'
   </p>
+  {% if not small_sword %}
+  <p>
+    You spot a small sword lying next to the statue.
+  </p>
+  {% endif %}
   <p class="message">
     {{ message }}
   </p>

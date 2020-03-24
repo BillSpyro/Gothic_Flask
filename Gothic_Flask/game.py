@@ -161,7 +161,46 @@ def waterway_crypt():
         crypt_key = True
     else:
         crypt_key = False
-    return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key)
+    message = "What will you do?"
+    return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key, message=message)
+
+@bp.route('/waterway_crypt/take_crypt_key')
+def waterway_crypt_take_crypt_key():
+    Gothic_Flask.Items.crypt_key.inInventory = True
+    if Gothic_Flask.Items.crypt_key.inInventory:
+        crypt_key = True
+    else:
+        crypt_key = False
+    message = "You take the crypt key"
+    return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key, message=message)
+
+@bp.route('/waterway_crypt/swim')
+def waterway_crypt_swim():
+    message = """You jump right into the water. But have you forgotten?
+    You are only just a skeleton and bouyancy is a problem
+    for the undead. You then proceed to drown."""
+    return render_template('Death.html', area=waterway_crypt, message=message)
+
+@bp.route('/waterway_crypt/look')
+def waterway_crypt_look():
+    Gothic_Flask.Items.crypt_key.inInventory = True
+    if Gothic_Flask.Items.crypt_key.inInventory:
+        crypt_key = True
+    else:
+        crypt_key = False
+    chance = randint(1,3)
+    if chance == 1:
+        message = """While trying to fish something out of the water,
+        something grabs your boney hand and drags you in.
+        You then proceed to drown."""
+        return render_template('Death.html', area=death, message=message)
+    elif chance == 2:
+        message = "You find nothing."
+    else:
+        message = """You manage to fish something out of the water. It
+        is an energy vile."""
+        Gothic_Flask.Items.energy_vile.amount += 1
+    return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key, message=message)
 
 #Gate Crypt Area
 @bp.route('/gate_crypt')
