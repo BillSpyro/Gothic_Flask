@@ -1,0 +1,28 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Waterway Crypt-</h1>
+  <p>
+    As you enter the room, you can see a stream of water
+    coming from a grate from one side of the room which
+    flows to the other side of the room into another grate.
+  </p>
+  {% if not crypt_key %}
+  <p>
+    Taking a closer look into the stream of water, you can
+    see something shimmer. It seems to be the crypt_key.
+  </p>
+  {% endif %}
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+{% if not crypt_key %}
+    <li><a href="{{ url_for('game.waterway_crypt_take_crypt_key') }}"><input type="button" value="Take crypt key"></a></li>
+{% endif %}
+    <li><a href="{{ url_for('game.waterway_crypt_swim') }}"><input type="button" value="Go for a swim"></a></li>
+    <li><a href="{{ url_for('game.waterway_crypt_look') }}"><input type="button" value="Look for something in the water"></a></li>
+    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Go back"></a></li>
+  </ul>
+</nav>
+<a href="{{ url_for('game.inventory') }}"><input type="button" value="Inventory"></a>

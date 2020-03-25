@@ -1,0 +1,29 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Gate Crypt-</h1>
+  <p>
+    As you near the gate, there seems to be a lock attached.
+    Beyond the gate it looks like freedom from this dank and
+    dark crypt.
+  </p>
+  {% if crypt_key %}
+  <p>
+    But you now have the Crypt Key!
+    You can now get out of here.
+  </p>
+  {% endif %}
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+{% if crypt_key %}
+    <li><a href="{{ url_for('game.crypt_graveyard') }}"><input type="button" value="Leave the crypt"></a></li>
+{% else %}
+    <li><a href="{{ url_for('game.gate_crypt_try') }}"><input type="button" value="Try the lock"></a></li>
+{% endif %}
+    <li><a href="{{ url_for('game.gate_crypt_use') }}"><input type="button" value="Use your head"></a></li>
+    <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Go back"></a></li>
+  </ul>
+</nav>
+<a href="{{ url_for('game.inventory') }}"><input type="button" value="Inventory"></a>

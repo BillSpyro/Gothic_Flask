@@ -7,6 +7,11 @@
     the left and one to the right. There is also a gate
     with a stairwell behind it leading upwards.
   </p>
+  {% if not copper_shield %}
+  <p>
+    Next to the slab that you have awoken from there is a copper shield
+  </p>
+  {% endif %}
   <p class="message">
     {{ message }}
   </p>

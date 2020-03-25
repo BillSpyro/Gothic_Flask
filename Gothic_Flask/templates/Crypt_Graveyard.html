@@ -1,0 +1,24 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Crypt Graveyard-</h1>
+  <p>
+    You are now up a hill next to the crypt in the middle
+    of a sprawling graveyard. There are graves and
+    tombstones spread out across the land. It is the middle
+    of the night and the sky is dark blue. In the distance
+    a large mausoleum is resting upon a towering hill. From
+    where you are one path leads to the graveyard enterance
+    and the other leads deeper into the graveyard and towards
+    the hilltop mausoleum.
+  </p>
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+    <li><a href="{{ url_for('game.enterance_graveyard') }}"><input type="button" value="Go to the graveyard enterance"></a></li>
+    <li><a href="{{ url_for('game.graves_graveyard') }}"><input type="button" value="Go deeper into the graveyard"></a></li>
+    <li><a href="{{ url_for('game.gate_crypt') }}"><input type="button" value=" Go back into the crypt"></a></li>
+  </ul>
+</nav>
+<a href="{{ url_for('game.inventory') }}"><input type="button" value="Inventory"></a>

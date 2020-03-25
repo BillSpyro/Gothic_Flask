@@ -1,0 +1,26 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Graves Graveyard-</h1>
+  <p>
+    You are now surrounded by open graves and tombstones.
+    One way leads to a large wooden gate and the other
+    leads to the crypt hill.
+  </p>
+  {% if not looted %}
+  <p>
+    You spot an open grave
+  </p>
+  {% endif %}
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+{% if not looted %}
+    <li><a href="{{ url_for('game.graves_graveyard_loot') }}"><input type="button" value="Loot an open grave"></a></li>
+{% endif %}
+    <li><a href="{{ url_for('game.wooden_gate_graveyard') }}"><input type="button" value="Go to the large wooden gate"></a></li>
+    <li><a href="{{ url_for('game.crypt_graveyard') }}"><input type="button" value="Go back up the crypt hill"></a></li>
+  </ul>
+</nav>
+<a href="{{ url_for('game.inventory') }}"><input type="button" value="Inventory"></a>

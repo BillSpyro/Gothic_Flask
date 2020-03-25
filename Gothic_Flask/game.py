@@ -89,6 +89,11 @@ def inventory():
         energy_vile_amount = 0
     return render_template('Inventory.html', area=inventory, health=health, gold=gold, copper_shield=copper_shield, silver_shield=silver_shield, small_sword=small_sword, club=club, war_hammer=war_hammer, crypt_key=crypt_key, graveyard_key=graveyard_key, skull_key=skull_key, life_bottle_amount=life_bottle_amount, energy_vile_amount=energy_vile_amount)
 
+#Gargoyle Shop
+@bp.route('/gargoyle_shop')
+def gargoyle_shop():
+    return render_template('Gargoyle_Shop.html', area=gargoyle_shop)
+
 #Main Crypt Area
 @bp.route('/main_crypt')
 def main_crypt():
@@ -161,7 +166,49 @@ def waterway_crypt():
         crypt_key = True
     else:
         crypt_key = False
-    return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key)
+    message = "What will you do?"
+    return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key, message=message)
+
+#Taking crypt key action
+@bp.route('/waterway_crypt/take_crypt_key')
+def waterway_crypt_take_crypt_key():
+    Gothic_Flask.Items.crypt_key.inInventory = True
+    if Gothic_Flask.Items.crypt_key.inInventory:
+        crypt_key = True
+    else:
+        crypt_key = False
+    message = "You take the crypt key"
+    return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key, message=message)
+
+#Going for a swim action
+@bp.route('/waterway_crypt/swim')
+def waterway_crypt_swim():
+    message = """You jump right into the water. But have you forgotten?
+    You are only just a skeleton and bouyancy is a problem
+    for the undead. You then proceed to drown."""
+    return render_template('Death.html', area=waterway_crypt, message=message)
+
+#Looking in the water action
+@bp.route('/waterway_crypt/look')
+def waterway_crypt_look():
+    Gothic_Flask.Items.crypt_key.inInventory = True
+    if Gothic_Flask.Items.crypt_key.inInventory:
+        crypt_key = True
+    else:
+        crypt_key = False
+    chance = randint(1,3)
+    if chance == 1:
+        message = """While trying to fish something out of the water,
+        something grabs your boney hand and drags you in.
+        You then proceed to drown."""
+        return render_template('Death.html', area=death, message=message)
+    elif chance == 2:
+        message = "You find nothing."
+    else:
+        message = """You manage to fish something out of the water. It
+        is an energy vile."""
+        Gothic_Flask.Items.energy_vile.amount += 1
+    return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key, message=message)
 
 #Gate Crypt Area
 @bp.route('/gate_crypt')
@@ -170,7 +217,92 @@ def gate_crypt():
         crypt_key = True
     else:
         crypt_key = False
-    return render_template('Gate_Crypt.html', area=gate_crypt, crypt_key=crypt_key)
+    message = "What will you do?"
+    return render_template('Gate_Crypt.html', area=gate_crypt, crypt_key=crypt_key, message=message)
+
+#Trying the lock action
+@bp.route('/gate_crypt/try_the_lock')
+def gate_crypt_try():
+    if Gothic_Flask.Items.crypt_key.inInventory:
+        crypt_key = True
+    else:
+        crypt_key = False
+    message = "You try to fiddle with the lock to no avail."
+    return render_template('Gate_Crypt.html', area=gate_crypt, crypt_key=crypt_key, message=message)
+
+#Using your head action
+@bp.route('/gate_crypt/use_your_head')
+def gate_crypt_use():
+    message = """You bang your skull on the lock to no avail.
+    fustrated and determined you continuosly bang
+    your skull on the lock. After banging too many
+    times your skull has exploded into a million
+    tiny pieces."""
+    return render_template('death.html', area=death, message=message)
+
+#Crypt Graveyard Area
+@bp.route('/crypt_graveyard')
+def crypt_graveyard():
+    message = "What will you do?"
+    return render_template('Crypt_Graveyard.html', area=crypt_graveyard, message=message)
+
+#Enterance Graveyard Area
+@bp.route('/enterance_graveyard')
+def enterance_graveyard():
+    if Gothic_Flask.Map.enterance_graveyard.looted:
+        looted = True
+    else:
+        looted = False
+    message = "What will you do?"
+    return render_template('Enterance_Graveyard.html', area=enterance_graveyard, message=message, looted=looted)
+
+#Looting an open grave action
+@bp.route('/enterance_graveyard/loot_an_open_grave')
+def enterance_graveyard_loot():
+    Gothic_Flask.Map.enterance_graveyard.looted = True
+    if Gothic_Flask.Map.enterance_graveyard.looted:
+        looted = True
+    else:
+        looted = False
+    gold_yield = randint(20, 100)
+    Gothic_Flask.Characters.player.gold += gold_yield
+    message = f"""You pillage a nearby open grave.
+    The plunder has yielded you {gold_yield} gold"""
+    return render_template('Enterance_Graveyard.html', area=enterance_graveyard, message=message, looted=looted)
+
+#Graves Graveyard Area
+@bp.route('/graves_graveyard')
+def graves_graveyard():
+    if Gothic_Flask.Map.graves_graveyard.looted:
+        looted = True
+    else:
+        looted = False
+    message = "What will you do?"
+    return render_template('Graves_Graveyard.html', area=graves_graveyard, message=message, looted=looted)
+
+#Looting an open grave action
+@bp.route('/graves_graveyard/loot_an_open_grave')
+def graves_graveyard_loot():
+    Gothic_Flask.Map.graves_graveyard.looted = True
+    if Gothic_Flask.Map.graves_graveyard.looted:
+        looted = True
+    else:
+        looted = False
+    gold_yield = randint(20, 100)
+    Gothic_Flask.Characters.player.gold += gold_yield
+    message = f"""You pillage a nearby open grave.
+    The plunder has yielded you {gold_yield} gold"""
+    return render_template('Graves_Graveyard.html', area=graves_graveyard, message=message, looted=looted)
+
+#Graves Graveyard Area
+@bp.route('/wooden_gate_graveyard')
+def wooden_gate_graveyard():
+    if Gothic_Flask.Items.graveyard_key.inInventory:
+        graveyard_key = True
+    else:
+        graveyard_key = False
+    message = "What will you do?"
+    return render_template('Wooden_Gate_Graveyard.html', area=wooden_gate_graveyard, message=message, graveyard_key=graveyard_key)
 
 #Unknown Area
 @bp.route('/<area>')
