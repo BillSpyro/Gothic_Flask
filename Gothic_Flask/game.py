@@ -164,6 +164,7 @@ def waterway_crypt():
     message = "What will you do?"
     return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key, message=message)
 
+#Taking crypt key action
 @bp.route('/waterway_crypt/take_crypt_key')
 def waterway_crypt_take_crypt_key():
     Gothic_Flask.Items.crypt_key.inInventory = True
@@ -174,6 +175,7 @@ def waterway_crypt_take_crypt_key():
     message = "You take the crypt key"
     return render_template('Waterway_Crypt.html', area=waterway_crypt, crypt_key=crypt_key, message=message)
 
+#Going for a swim action
 @bp.route('/waterway_crypt/swim')
 def waterway_crypt_swim():
     message = """You jump right into the water. But have you forgotten?
@@ -181,6 +183,7 @@ def waterway_crypt_swim():
     for the undead. You then proceed to drown."""
     return render_template('Death.html', area=waterway_crypt, message=message)
 
+#Looking in the water action
 @bp.route('/waterway_crypt/look')
 def waterway_crypt_look():
     Gothic_Flask.Items.crypt_key.inInventory = True
@@ -209,7 +212,34 @@ def gate_crypt():
         crypt_key = True
     else:
         crypt_key = False
-    return render_template('Gate_Crypt.html', area=gate_crypt, crypt_key=crypt_key)
+    message = "What will you do?"
+    return render_template('Gate_Crypt.html', area=gate_crypt, crypt_key=crypt_key, message=message)
+
+#Trying the lock action
+@bp.route('/gate_crypt/try_the_lock')
+def gate_crypt_try():
+    if Gothic_Flask.Items.crypt_key.inInventory:
+        crypt_key = True
+    else:
+        crypt_key = False
+    message = "You try to fiddle with the lock to no avail."
+    return render_template('Gate_Crypt.html', area=gate_crypt, crypt_key=crypt_key, message=message)
+
+#Using your head action
+@bp.route('/gate_crypt/use_your_head')
+def gate_crypt_use():
+    message = """You bang your skull on the lock to no avail.
+    fustrated and determined you continuosly bang
+    your skull on the lock. After banging too many
+    times your skull has exploded into a million
+    tiny pieces."""
+    return render_template('death.html', area=death, message=message)
+
+#Crypt Graveyard Area
+@bp.route('/crypt_graveyard')
+def crypt_graveyard():
+    message = "What will you do?"
+    return render_template('Crypt_Graveyard.html', area=crypt_graveyard, message=message)
 
 #Unknown Area
 @bp.route('/<area>')
