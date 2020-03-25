@@ -1,0 +1,29 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Gargoyle Shop Weapons-</h1>
+  <p>
+    Here all of the Weapons I have for sale.
+  </p>
+  <ul>
+    {% if not small_sword %}
+    <li>Small Sword costs 50</li>
+    {% endif %}
+    {% if not war_hammer %}
+    <li>War Hammer costs 200</li>
+    {% endif %}
+  </ul>
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+    <li>Gold: {{ gold }}</li>
+    {% if gold >= 50 and not small_sword %}
+    <li><a href="{{ url_for('game.gargoyle_shop_weapons_sword', return_area=return_area) }}"><input type="button" value="Buy Small Sword"></a></li>
+    {% endif %}
+    {% if gold >= 200 and not war_hammer %}
+    <li><a href="{{ url_for('game.gargoyle_shop_weapons_hammer', return_area=return_area) }}"><input type="button" value="Buy War Hammer"></a></li>
+    {% endif %}
+    <li><a href="{{ url_for('game.gargoyle_shop', return_area=return_area) }}"><input type="button" value="Go back"></a></li>
+  </ul>
+</nav>

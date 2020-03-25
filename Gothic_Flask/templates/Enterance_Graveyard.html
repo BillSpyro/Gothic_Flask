@@ -22,7 +22,7 @@
 {% if not looted %}
     <li><a href="{{ url_for('game.enterance_graveyard_loot') }}"><input type="button" value="Loot an open grave"></a></li>
 {% endif %}
-    <li><a href="{{ url_for('game.gargoyle_shop') }}"><input type="button" value="Talk to the gargoyle"></a></li>
+    <li><a href="{{ url_for('game.gargoyle_shop', return_area='enterance_graveyard') }}"><input type="button" value="Talk to the gargoyle"></a></li>
     <li><a href="{{ url_for('game.crypt_graveyard') }}"><input type="button" value="Go back up the crypt hill"></a></li>
   </ul>
 </nav>

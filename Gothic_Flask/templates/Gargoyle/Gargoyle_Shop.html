@@ -1,0 +1,19 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Gargoyle Shop-</h1>
+  <p>
+    Hello Stranger. I have many useful items for sale.
+    What would you like to buy?
+  </p>
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+    <li>Gold: {{ gold }}</li>
+    <li><a href="{{ url_for('game.gargoyle_shop_health', return_area=return_area) }}"><input type="button" value="Health"></a></li>
+    <li><a href="{{ url_for('game.gargoyle_shop_shields', return_area=return_area) }}"><input type="button" value="Shields"></a></li>
+    <li><a href="{{ url_for('game.gargoyle_shop_weapons', return_area=return_area) }}"><input type="button" value="Weapons"></a></li>
+    <li><a href="{{ url_for(return_link) }}"><input type="button" value="Go back"></a></li>
+  </ul>
+</nav>

@@ -1,0 +1,41 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Gargoyle Shop Shields-</h1>
+  <p>
+    Here all of the shields I have for sale.
+  </p>
+  <ul>
+    {% if not copper_shield %}
+    <li>Copper Shield costs 25</li>
+    {% endif %}
+    {% if not silver_shield %}
+    <li>Silver Shield costs 50</li>
+    {% endif %}
+    {% if copper_shield %}
+    <li>Copper Shield repair costs 25</li>
+    {% endif %}
+    {% if silver_shield %}
+    <li>Silver Shield repair 50</li>
+    {% endif %}
+  </ul>
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+    <li>Gold: {{ gold }}</li>
+    {% if gold >= 25 and not copper_shield %}
+    <li><a href="{{ url_for('game.gargoyle_shop_shields_copper', return_area=return_area) }}"><input type="button" value="Buy Copper Shield"></a></li>
+    {% endif %}
+    {% if gold >= 50 and not silver_shield %}
+    <li><a href="{{ url_for('game.gargoyle_shop_shields_silver', return_area=return_area) }}"><input type="button" value="Buy Silver Shield"></a></li>
+    {% endif %}
+    {% if gold >= 25 and copper_shield and copper_shield_durability < 50 %}
+    <li><a href="{{ url_for('game.gargoyle_shop_shields_copper_repair', return_area=return_area) }}"><input type="button" value="Repair Copper Shield"></a></li>
+    {% endif %}
+    {% if gold >= 50 and not silver_shield and silver_shield_durability < 50 %}
+    <li><a href="{{ url_for('game.gargoyle_shop_shields_silver_repair', return_area=return_area) }}"><input type="button" value="Repair Silver Shield"></a></li>
+    {% endif %}
+    <li><a href="{{ url_for('game.gargoyle_shop', return_area=return_area) }}"><input type="button" value="Go back"></a></li>
+  </ul>
+</nav>

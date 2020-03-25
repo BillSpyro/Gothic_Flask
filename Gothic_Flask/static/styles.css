@@ -33,6 +33,10 @@ p.message {
   padding: 1rem;
 }
 
-ul li a {
+ul li {
+  padding: 1rem;
+}
+
+ul li a input {
   font-size: 24pt;
 }

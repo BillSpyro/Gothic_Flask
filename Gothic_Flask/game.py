@@ -38,6 +38,8 @@ def death():
     Gothic_Flask.Items.crypt_key.inInventory = False
     Gothic_Flask.Items.graveyard_key.inInventory = False
     Gothic_Flask.Items.skull_key.inInventory = False
+    Gothic_Flask.Map.enterance_graveyard.looted = False
+    Gothic_Flask.Map.graves_graveyard.looted = False
     return render_template('Game.html', area=death)
 
 #Inventory Screen
@@ -90,9 +92,179 @@ def inventory():
     return render_template('Inventory.html', area=inventory, health=health, gold=gold, copper_shield=copper_shield, silver_shield=silver_shield, small_sword=small_sword, club=club, war_hammer=war_hammer, crypt_key=crypt_key, graveyard_key=graveyard_key, skull_key=skull_key, life_bottle_amount=life_bottle_amount, energy_vile_amount=energy_vile_amount)
 
 #Gargoyle Shop
-@bp.route('/gargoyle_shop')
-def gargoyle_shop():
-    return render_template('Gargoyle_Shop.html', area=gargoyle_shop)
+@bp.route('<return_area>/gargoyle_shop')
+def gargoyle_shop(return_area):
+    gold = Gothic_Flask.Characters.player.gold
+    message = "What will you do?"
+    return_link = f'game.{return_area}'
+    return render_template('Gargoyle/Gargoyle_Shop.html', area=gargoyle_shop, return_area=return_area, return_link=return_link, message=message, gold=gold)
+
+#Gargoyle Shop Health
+@bp.route('<return_area>/gargoyle_shop/health')
+def gargoyle_shop_health(return_area):
+    gold = Gothic_Flask.Characters.player.gold
+    message = "What will you do?"
+    return render_template('Gargoyle/Gargoyle_Shop_Health.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold)
+
+#Buy Life Bottle action
+@bp.route('<return_area>/gargoyle_shop/health_buy_life_bottle')
+def gargoyle_shop_health_life(return_area):
+    Gothic_Flask.Characters.player.gold -= 100
+    Gothic_Flask.Items.life_bottle.amount += 1
+    gold = Gothic_Flask.Characters.player.gold
+    message = "You bought a Life Bottle"
+    return render_template('Gargoyle/Gargoyle_Shop_Health.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold)
+
+#Buy Energy Vile action
+@bp.route('<return_area>/gargoyle_shop/health_buy_energy_vile')
+def gargoyle_shop_health_energy(return_area):
+    Gothic_Flask.Characters.player.gold -= 50
+    Gothic_Flask.Items.energy_vile.amount += 1
+    gold = Gothic_Flask.Characters.player.gold
+    message = "You bought an Energy Vile"
+    return render_template('Gargoyle/Gargoyle_Shop_Health.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold)
+
+#Gargoyle Shop Shields
+@bp.route('<return_area>/gargoyle_shop/shields')
+def gargoyle_shop_shields(return_area):
+    gold = Gothic_Flask.Characters.player.gold
+    copper_shield_durability = Gothic_Flask.Items.copper_shield.durability
+    if Gothic_Flask.Items.copper_shield.inInventory:
+        copper_shield = True
+    else:
+        copper_shield = False
+    silver_shield_durability = Gothic_Flask.Items.silver_shield.durability
+    if Gothic_Flask.Items.silver_shield.inInventory:
+        silver_shield = True
+    else:
+        silver_shield = False
+    message = "What will you do?"
+    return render_template('Gargoyle/Gargoyle_Shop_Shields.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold, copper_shield=copper_shield, copper_shield_durability=copper_shield_durability, silver_shield=silver_shield, silver_shield_durability=silver_shield_durability)
+
+#Buy Copper Shield Action
+@bp.route('<return_area>/gargoyle_shop/shields_buy_copper_shield')
+def gargoyle_shop_shields_copper(return_area):
+    Gothic_Flask.Characters.player.gold -= 25
+    Gothic_Flask.Items.copper_shield.inInventory = True
+    gold = Gothic_Flask.Characters.player.gold
+    copper_shield_durability = Gothic_Flask.Items.copper_shield.durability
+    if Gothic_Flask.Items.copper_shield.inInventory:
+        copper_shield = True
+    else:
+        copper_shield = False
+    silver_shield_durability = Gothic_Flask.Items.silver_shield.durability
+    if Gothic_Flask.Items.silver_shield.inInventory:
+        silver_shield = True
+    else:
+        silver_shield = False
+    message = "You bought the copper shield"
+    return render_template('Gargoyle/Gargoyle_Shop_Shields.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold, copper_shield=copper_shield, copper_shield_durability=copper_shield_durability, silver_shield=silver_shield, silver_shield_durability=silver_shield_durability)
+
+#Buy Silver Shield Action
+@bp.route('<return_area>/gargoyle_shop/shields_buy_silver_shield')
+def gargoyle_shop_shields_silver(return_area):
+    Gothic_Flask.Characters.player.gold -= 50
+    Gothic_Flask.Items.silver_shield.inInventory = True
+    gold = Gothic_Flask.Characters.player.gold
+    copper_shield_durability = Gothic_Flask.Items.copper_shield.durability
+    if Gothic_Flask.Items.copper_shield.inInventory:
+        copper_shield = True
+    else:
+        copper_shield = False
+    silver_shield_durability = Gothic_Flask.Items.silver_shield.durability
+    if Gothic_Flask.Items.silver_shield.inInventory:
+        silver_shield = True
+    else:
+        silver_shield = False
+    message = "You bought the silver shield"
+    return render_template('Gargoyle/Gargoyle_Shop_Shields.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold, copper_shield=copper_shield, copper_shield_durability=copper_shield_durability, silver_shield=silver_shield, silver_shield_durability=silver_shield_durability)
+
+#Repair Copper Shield Action
+@bp.route('<return_area>/gargoyle_shop/shields_repair_copper_shield')
+def gargoyle_shop_shields_copper_repair(return_area):
+    Gothic_Flask.Characters.player.gold -= 25
+    Gothic_Flask.Items.copper_shield.durability = 50
+    gold = Gothic_Flask.Characters.player.gold
+    copper_shield_durability = Gothic_Flask.Items.copper_shield.durability
+    if Gothic_Flask.Items.copper_shield.inInventory:
+        copper_shield = True
+    else:
+        copper_shield = False
+    silver_shield_durability = Gothic_Flask.Items.silver_shield.durability
+    if Gothic_Flask.Items.silver_shield.inInventory:
+        silver_shield = True
+    else:
+        silver_shield = False
+    message = "You repaired the copper shield"
+    return render_template('Gargoyle/Gargoyle_Shop_Shields.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold, copper_shield=copper_shield, copper_shield_durability=copper_shield_durability, silver_shield=silver_shield, silver_shield_durability=silver_shield_durability)
+
+#Repair Silver Shield Action
+@bp.route('<return_area>/gargoyle_shop/shields_repair_copper_shield')
+def gargoyle_shop_shields_silver_repair(return_area):
+    Gothic_Flask.Characters.player.gold -= 25
+    Gothic_Flask.Items.silver_shield.durability = 50
+    gold = Gothic_Flask.Characters.player.gold
+    copper_shield_durability = Gothic_Flask.Items.copper_shield.durability
+    if Gothic_Flask.Items.copper_shield.inInventory:
+        copper_shield = True
+    else:
+        copper_shield = False
+    silver_shield_durability = Gothic_Flask.Items.silver_shield.durability
+    if Gothic_Flask.Items.silver_shield.inInventory:
+        silver_shield = True
+    else:
+        silver_shield = False
+    message = "You repaired the silver shield"
+    return render_template('Gargoyle/Gargoyle_Shop_Shields.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold, copper_shield=copper_shield, copper_shield_durability=copper_shield_durability, silver_shield=silver_shield, silver_shield_durability=silver_shield_durability)
+
+#Gargoyle Shop Weapons
+@bp.route('<return_area>/gargoyle_shop/weapons')
+def gargoyle_shop_weapons(return_area):
+    gold = Gothic_Flask.Characters.player.gold
+    if Gothic_Flask.Items.small_sword.inInventory:
+        small_sword = True
+    else:
+        small_sword = False
+    if Gothic_Flask.Items.war_hammer.inInventory:
+        war_hammer = True
+    else:
+        war_hammer = False
+    message = "What will you do?"
+    return render_template('Gargoyle/Gargoyle_Shop_Weapons.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold, small_sword=small_sword, war_hammer=war_hammer)
+
+#Buy Small Sword action
+@bp.route('<return_area>/gargoyle_shop/weapons/buy_small_sword')
+def gargoyle_shop_weapons_sword(return_area):
+    Gothic_Flask.Characters.player.gold -= 50
+    Gothic_Flask.Items.small_sword.inInventory = True
+    gold = Gothic_Flask.Characters.player.gold
+    if Gothic_Flask.Items.small_sword.inInventory:
+        small_sword = True
+    else:
+        small_sword = False
+    if Gothic_Flask.Items.war_hammer.inInventory:
+        war_hammer = True
+    else:
+        war_hammer = False
+    message = "You bought the Small Sword"
+    return render_template('Gargoyle/Gargoyle_Shop_Weapons.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold, small_sword=small_sword, war_hammer=war_hammer)
+
+#Buy War Hammer action
+@bp.route('<return_area>/gargoyle_shop/weapons/buy_war_hammer')
+def gargoyle_shop_weapons_hammer(return_area):
+    Gothic_Flask.Characters.player.gold -= 200
+    Gothic_Flask.Items.war_hammer.inInventory = True
+    gold = Gothic_Flask.Characters.player.gold
+    if Gothic_Flask.Items.small_sword.inInventory:
+        small_sword = True
+    else:
+        small_sword = False
+    if Gothic_Flask.Items.war_hammer.inInventory:
+        war_hammer = True
+    else:
+        war_hammer = False
+    message = "You bought the War Hammer"
+    return render_template('Gargoyle/Gargoyle_Shop_Weapons.html', area=gargoyle_shop, return_area=return_area, message=message, gold=gold, small_sword=small_sword, war_hammer=war_hammer)
 
 #Main Crypt Area
 @bp.route('/main_crypt')
