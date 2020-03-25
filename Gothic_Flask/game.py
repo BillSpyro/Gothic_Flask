@@ -19,6 +19,22 @@ bp = Blueprint('game', __name__, url_prefix='/game')
 #Intro Area
 @bp.route('/intro')
 def intro():
+    Gothic_Flask.Characters.player.health = 100
+    Gothic_Flask.Characters.player.gold = 0
+    Gothic_Flask.Items.copper_shield.inInventory = False
+    Gothic_Flask.Items.copper_shield.durability = 50
+    Gothic_Flask.Items.silver_shield.inInventory = False
+    Gothic_Flask.Items.silver_shield.durability = 100
+    Gothic_Flask.Items.small_sword.inInventory = False
+    Gothic_Flask.Items.club.inInventory = False
+    Gothic_Flask.Items.war_hammer.inInventory = False
+    Gothic_Flask.Items.life_bottle.amount = 0
+    Gothic_Flask.Items.energy_vile.amount = 0
+    Gothic_Flask.Items.crypt_key.inInventory = False
+    Gothic_Flask.Items.graveyard_key.inInventory = False
+    Gothic_Flask.Items.skull_key.inInventory = False
+    Gothic_Flask.Map.enterance_graveyard.looted = False
+    Gothic_Flask.Map.graves_graveyard.looted = False
     return render_template('Intro.html', area=intro)
 
 #Death Screen
