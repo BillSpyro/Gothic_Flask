@@ -1,0 +1,25 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Gargoyle Shop Health-</h1>
+  <p>
+    Here all of the health items I have for sale.
+  </p>
+  <ul>
+    <li>Life Bottle costs 100</li>
+    <li>Energy Vile costs 50</li>
+  </ul>
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+    <li>Gold: {{ gold }}</li>
+    {% if gold >= 100 %}
+    <li><a href="{{ url_for('game.gargoyle_shop_health_life', return_area=return_area) }}"><input type="button" value="Buy Life Bottle"></a></li>
+    {% endif %}
+    {% if gold >= 50 %}
+    <li><a href="{{ url_for('game.gargoyle_shop_health_energy', return_area=return_area) }}"><input type="button" value="Buy Energy Vile"></a></li>
+    {% endif %}
+    <li><a href="{{ url_for('game.gargoyle_shop', return_area=return_area) }}"><input type="button" value="Go back"></a></li>
+  </ul>
+</nav>
