@@ -1,0 +1,29 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Enterance Graveyard-</h1>
+  <p>
+    You walk down the hill to the graveyard enterance. There
+    is a large gate that is keeping you from leaving the
+    graveyard. Past the gate you can see a distant village.
+    The gate doesn't have a lock and seems to be stuck shut.
+    There also is an object attached to the wall next to the
+    gate. It seems to be a gargoyle. His eyes are glowing.
+  </p>
+  {% if not looted %}
+  <p>
+    You spot an open grave
+  </p>
+  {% endif %}
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+{% if not looted %}
+    <li><a href="{{ url_for('game.enterance_graveyard_loot') }}"><input type="button" value="Loot an open grave"></a></li>
+{% endif %}
+    <li><a href="{{ url_for('game.gargoyle_shop') }}"><input type="button" value="Talk to the gargoyle"></a></li>
+    <li><a href="{{ url_for('game.crypt_graveyard') }}"><input type="button" value="Go back up the crypt hill"></a></li>
+  </ul>
+</nav>
+<a href="{{ url_for('game.inventory') }}"><input type="button" value="Inventory"></a>

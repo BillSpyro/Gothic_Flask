@@ -89,6 +89,11 @@ def inventory():
         energy_vile_amount = 0
     return render_template('Inventory.html', area=inventory, health=health, gold=gold, copper_shield=copper_shield, silver_shield=silver_shield, small_sword=small_sword, club=club, war_hammer=war_hammer, crypt_key=crypt_key, graveyard_key=graveyard_key, skull_key=skull_key, life_bottle_amount=life_bottle_amount, energy_vile_amount=energy_vile_amount)
 
+#Gargoyle Shop
+@bp.route('/gargoyle_shop')
+def gargoyle_shop():
+    return render_template('Gargoyle_Shop.html', area=gargoyle_shop)
+
 #Main Crypt Area
 @bp.route('/main_crypt')
 def main_crypt():
@@ -240,6 +245,64 @@ def gate_crypt_use():
 def crypt_graveyard():
     message = "What will you do?"
     return render_template('Crypt_Graveyard.html', area=crypt_graveyard, message=message)
+
+#Enterance Graveyard Area
+@bp.route('/enterance_graveyard')
+def enterance_graveyard():
+    if Gothic_Flask.Map.enterance_graveyard.looted:
+        looted = True
+    else:
+        looted = False
+    message = "What will you do?"
+    return render_template('Enterance_Graveyard.html', area=enterance_graveyard, message=message, looted=looted)
+
+#Looting an open grave action
+@bp.route('/enterance_graveyard/loot_an_open_grave')
+def enterance_graveyard_loot():
+    Gothic_Flask.Map.enterance_graveyard.looted = True
+    if Gothic_Flask.Map.enterance_graveyard.looted:
+        looted = True
+    else:
+        looted = False
+    gold_yield = randint(20, 100)
+    Gothic_Flask.Characters.player.gold += gold_yield
+    message = f"""You pillage a nearby open grave.
+    The plunder has yielded you {gold_yield} gold"""
+    return render_template('Enterance_Graveyard.html', area=enterance_graveyard, message=message, looted=looted)
+
+#Graves Graveyard Area
+@bp.route('/graves_graveyard')
+def graves_graveyard():
+    if Gothic_Flask.Map.graves_graveyard.looted:
+        looted = True
+    else:
+        looted = False
+    message = "What will you do?"
+    return render_template('Graves_Graveyard.html', area=graves_graveyard, message=message, looted=looted)
+
+#Looting an open grave action
+@bp.route('/graves_graveyard/loot_an_open_grave')
+def graves_graveyard_loot():
+    Gothic_Flask.Map.graves_graveyard.looted = True
+    if Gothic_Flask.Map.graves_graveyard.looted:
+        looted = True
+    else:
+        looted = False
+    gold_yield = randint(20, 100)
+    Gothic_Flask.Characters.player.gold += gold_yield
+    message = f"""You pillage a nearby open grave.
+    The plunder has yielded you {gold_yield} gold"""
+    return render_template('Graves_Graveyard.html', area=graves_graveyard, message=message, looted=looted)
+
+#Graves Graveyard Area
+@bp.route('/wooden_gate_graveyard')
+def wooden_gate_graveyard():
+    if Gothic_Flask.Items.graveyard_key.inInventory:
+        graveyard_key = True
+    else:
+        graveyard_key = False
+    message = "What will you do?"
+    return render_template('Wooden_Gate_Graveyard.html', area=wooden_gate_graveyard, message=message, graveyard_key=graveyard_key)
 
 #Unknown Area
 @bp.route('/<area>')
