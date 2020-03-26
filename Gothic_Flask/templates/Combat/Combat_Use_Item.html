@@ -1,0 +1,22 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Combat Use Item-</h1>
+  <ul>
+    <li>Enemy: {{ enemy }}</li>
+    <li>{{ enemy }} health: {{ enemy_health }}
+  </ul>
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+    <li>Health: {{ health }}</li>
+    {% if life_bottle_amount > 0 %}
+    <li><a href="{{ url_for('game.combat_use_item_life_bottle', return_area=return_area) }}"><input type="button" value="Life bottle"></a></li>
+    {% endif %}
+    {% if energy_vile_amount > 0 %}
+    <li><a href="{{ url_for('game.combat_use_item_energy_vile', return_area=return_area) }}"><input type="button" value="Energy Vile"></a></li>
+    {% endif %}
+    <li><a href="{{ url_for('game.combat', return_area=return_area) }}"><input type="button" value="Continue"></a></li>
+  </ul>
+</nav>
