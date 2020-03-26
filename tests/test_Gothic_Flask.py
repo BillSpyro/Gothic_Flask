@@ -8,9 +8,18 @@ def test_index(client):
     response = client.get('/')
     assert b'Play' in response.data
 
+def test_death(client):
+    response = client.get('/')
+    assert b'Play' in response.data
+
 def test_intro(client):
     response = client.get('/game/intro')
     assert b'Continue' in response.data
+    assert b'Save' in response.data
+    assert b'Your name is Player' in response.data
+    response = client.post('/game/intro', data={'name': 'Gordon'})
+    response = client.get('/game/intro')
+    assert b'Your name is Gordon' in response.data
 
 def test_main_crypt(client):
     response = client.get('/game/main_crypt')
