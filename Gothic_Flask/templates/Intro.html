@@ -9,6 +9,14 @@
     As you raise your hands you see skeletal fingers.
     You are in the form of an undead skeleton.
   </p>
+  <form method="post">
+    <label for="name">Enter a name</label>
+    <input name="name" id="name" value="{{ request.form['name'] }}" required>
+    <input type="submit" value="Save">
+  </form>
+  <p>
+    Your name is {{ name }}
+  </p>
   <ul>
     <li><a href="{{ url_for('game.main_crypt') }}"><input type="button" value="Continue"></a></li>
   </ul>
