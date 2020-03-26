@@ -12,6 +12,10 @@ body {
   flex-direction: column;
 }
 
+body a {
+  font-size: 16pt;
+}
+
 nav {
   justify-content: center;
   padding: 1rem;
@@ -38,5 +42,5 @@ ul li {
 }
 
 ul li a input {
-  font-size: 24pt;
+  font-size: 16pt;
 }
