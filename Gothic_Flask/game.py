@@ -118,6 +118,319 @@ def inventory(return_area):
     return_link = f'game.{return_area}'
     return render_template('Inventory.html', area=inventory, return_area=return_area, return_link=return_link, health=health, gold=gold, copper_shield=copper_shield, copper_shield_durability=copper_shield_durability , silver_shield=silver_shield, silver_shield_durability=silver_shield_durability , small_sword=small_sword, club=club, war_hammer=war_hammer, crypt_key=crypt_key, graveyard_key=graveyard_key, skull_key=skull_key, life_bottle_amount=life_bottle_amount, energy_vile_amount=energy_vile_amount, name=name)
 
+#Combat System
+@bp.route('<return_area>/combat')
+def combat(return_area):
+    enemy = Gothic_Flask.Map.combat.enemy
+    enemy_health = Gothic_Flask.Map.combat.enemy_health
+    enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+    health = Gothic_Flask.Characters.player.health
+    enemy_attack = randint(1,2)
+    if enemy_attack > 1 and Gothic_Flask.Map.combat.enemy_health > 0:
+        if Gothic_Flask.Items.silver_shield.inInventory == True and Gothic_Flask.Items.silver_shield.durability > 0:
+            Gothic_Flask.Items.silver_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Silver Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.silver_shield.durability < 0:
+                Gothic_Flask.Items.silver_shield.durability = 0
+        elif Gothic_Flask.Items.copper_shield.inInventory == True and Gothic_Flask.Items.copper_shield.durability > 0:
+            Gothic_Flask.Items.copper_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Copper Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.copper_shield.durability < 0:
+                Gothic_Flask.Items.copper_shield.durability = 0
+        else:
+            Gothic_Flask.Characters.player.health -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            You took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+    else:
+        enemy_message = f"The {Gothic_Flask.Map.combat.enemy} misses."
+
+    if Gothic_Flask.Characters.player.health <= 0:
+        message = f"You have been slain by the {enemy}"
+        name = Gothic_Flask.Characters.player.name
+        return render_template('Death.html', area=combat, message=message, name=name)
+
+    message = "What will you do?"
+    return_link = f'game.{return_area}'
+    return render_template('Combat/Combat.html', area=combat, return_area=return_area, return_link=return_link, message=message, enemy_message=enemy_message, enemy=enemy, enemy_health=enemy_health, health=health)
+
+#Attack Option
+@bp.route('<return_area>/combat_attack')
+def combat_attack(return_area):
+    enemy = Gothic_Flask.Map.combat.enemy
+    enemy_health = Gothic_Flask.Map.combat.enemy_health
+    enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+    health = Gothic_Flask.Characters.player.health
+
+    if Gothic_Flask.Items.small_sword.inInventory:
+        small_sword = True
+    else:
+        small_sword = False
+    if Gothic_Flask.Items.club.inInventory:
+        club = True
+    else:
+        club = False
+    if Gothic_Flask.Items.war_hammer.inInventory:
+        war_hammer = True
+    else:
+        war_hammer = False
+
+    message = "Attack with what?"
+    return render_template('Combat/Combat_Attack.html', area=combat, return_area=return_area, message=message, enemy=enemy, enemy_health=enemy_health, health=health, small_sword=small_sword, club=club, war_hammer=war_hammer)
+
+#Using Arm as weapon
+@bp.route('<return_area>/combat_attack_arm')
+def combat_attack_arm(return_area):
+    Gothic_Flask.Map.combat.enemy_health -= 5
+    enemy = Gothic_Flask.Map.combat.enemy
+    enemy_health = Gothic_Flask.Map.combat.enemy_health
+    enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+    health = Gothic_Flask.Characters.player.health
+    enemy_attack = randint(1,2)
+    if enemy_attack > 1 and Gothic_Flask.Map.combat.enemy_health > 0:
+        if Gothic_Flask.Items.silver_shield.inInventory == True and Gothic_Flask.Items.silver_shield.durability > 0:
+            Gothic_Flask.Items.silver_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Silver Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.silver_shield.durability < 0:
+                Gothic_Flask.Items.silver_shield.durability = 0
+        elif Gothic_Flask.Items.copper_shield.inInventory == True and Gothic_Flask.Items.copper_shield.durability > 0:
+            Gothic_Flask.Items.copper_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Copper Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.copper_shield.durability < 0:
+                Gothic_Flask.Items.copper_shield.durability = 0
+        else:
+            Gothic_Flask.Characters.player.health -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            You took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+    else:
+        enemy_message = f"The {Gothic_Flask.Map.combat.enemy} misses."
+
+    if Gothic_Flask.Characters.player.health <= 0:
+        message = f"You have been slain by the {enemy}"
+        name = Gothic_Flask.Characters.player.name
+        return render_template('Death.html', area=combat, message=message, name=name)
+
+    message = "You ripped of your own arm and smacked the enemy which dealt 5 damage"
+    return_link = f'game.{return_area}'
+    return render_template('Combat/Combat.html', area=combat, return_area=return_area, return_link=return_link, message=message, enemy_message=enemy_message, enemy=enemy, enemy_health=enemy_health, health=health)
+
+#Using Small Sword as weapon
+@bp.route('<return_area>/combat_attack_small_sword')
+def combat_attack_small_sword(return_area):
+    Gothic_Flask.Map.combat.enemy_health -= 10
+    enemy = Gothic_Flask.Map.combat.enemy
+    enemy_health = Gothic_Flask.Map.combat.enemy_health
+    enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+    health = Gothic_Flask.Characters.player.health
+    enemy_attack = randint(1,2)
+    if enemy_attack > 1 and Gothic_Flask.Map.combat.enemy_health > 0:
+        if Gothic_Flask.Items.silver_shield.inInventory == True and Gothic_Flask.Items.silver_shield.durability > 0:
+            Gothic_Flask.Items.silver_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Silver Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.silver_shield.durability < 0:
+                Gothic_Flask.Items.silver_shield.durability = 0
+        elif Gothic_Flask.Items.copper_shield.inInventory == True and Gothic_Flask.Items.copper_shield.durability > 0:
+            Gothic_Flask.Items.copper_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Copper Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.copper_shield.durability < 0:
+                Gothic_Flask.Items.copper_shield.durability = 0
+        else:
+            Gothic_Flask.Characters.player.health -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            You took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+    else:
+        enemy_message = f"The {Gothic_Flask.Map.combat.enemy} misses."
+
+    if Gothic_Flask.Characters.player.health <= 0:
+        message = f"You have been slain by the {enemy}"
+        name = Gothic_Flask.Characters.player.name
+        return render_template('Death.html', area=combat, message=message, name=name)
+
+    message = "You attacked with your small sword and dealt 10 damage"
+    return_link = f'game.{return_area}'
+    return render_template('Combat/Combat.html', area=combat, return_area=return_area, return_link=return_link, message=message, enemy_message=enemy_message, enemy=enemy, enemy_health=enemy_health, health=health)
+
+#Using Club as weapon
+@bp.route('<return_area>/combat_attack_club')
+def combat_attack_club(return_area):
+    Gothic_Flask.Map.combat.enemy_health -= 15
+    enemy = Gothic_Flask.Map.combat.enemy
+    enemy_health = Gothic_Flask.Map.combat.enemy_health
+    enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+    health = Gothic_Flask.Characters.player.health
+    enemy_attack = randint(1,2)
+    if enemy_attack > 1 and Gothic_Flask.Map.combat.enemy_health > 0:
+        if Gothic_Flask.Items.silver_shield.inInventory == True and Gothic_Flask.Items.silver_shield.durability > 0:
+            Gothic_Flask.Items.silver_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Silver Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.silver_shield.durability < 0:
+                Gothic_Flask.Items.silver_shield.durability = 0
+        elif Gothic_Flask.Items.copper_shield.inInventory == True and Gothic_Flask.Items.copper_shield.durability > 0:
+            Gothic_Flask.Items.copper_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message: f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Copper Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.copper_shield.durability < 0:
+                Gothic_Flask.Items.copper_shield.durability = 0
+        else:
+            Gothic_Flask.Characters.player.health -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            You took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+    else:
+        enemy_message = f"The {Gothic_Flask.Map.combat.enemy} misses."
+
+    if Gothic_Flask.Characters.player.health <= 0:
+        message = f"You have been slain by the {enemy}"
+        name = Gothic_Flask.Characters.player.name
+        return render_template('Death.html', area=combat, message=message, name=name)
+
+    message = "You attacked with your club and dealt 15 damage"
+    return_link = f'game.{return_area}'
+    return render_template('Combat/Combat.html', area=combat, return_area=return_area, return_link=return_link, message=message, enemy_message=enemy_message, enemy=enemy, enemy_health=enemy_health, health=health)
+
+#Using War Hammer as weapon
+@bp.route('<return_area>/combat_attack_war_hammer')
+def combat_attack_war_hammer(return_area):
+    Gothic_Flask.Map.combat.enemy_health -= 20
+    enemy = Gothic_Flask.Map.combat.enemy
+    enemy_health = Gothic_Flask.Map.combat.enemy_health
+    enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+    health = Gothic_Flask.Characters.player.health
+    enemy_attack = randint(1,2)
+    if enemy_attack > 1 and Gothic_Flask.Map.combat.enemy_health > 0:
+        if Gothic_Flask.Items.silver_shield.inInventory == True and Gothic_Flask.Items.silver_shield.durability > 0:
+            Gothic_Flask.Items.silver_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Silver Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.silver_shield.durability < 0:
+                Gothic_Flask.Items.silver_shield.durability = 0
+        elif Gothic_Flask.Items.copper_shield.inInventory == True and Gothic_Flask.Items.copper_shield.durability > 0:
+            Gothic_Flask.Items.copper_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Copper Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.copper_shield.durability < 0:
+                Gothic_Flask.Items.copper_shield.durability = 0
+        else:
+            Gothic_Flask.Characters.player.health -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            You took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+    else:
+        enemy_message = f"The {Gothic_Flask.Map.combat.enemy} misses."
+
+    if Gothic_Flask.Characters.player.health <= 0:
+        message = f"You have been slain by the {enemy}"
+        name = Gothic_Flask.Characters.player.name
+        return render_template('Death.html', area=combat, message=message, name=name)
+
+    message = "You attacked with your war hammer and dealt 20 damage"
+    return_link = f'game.{return_area}'
+    return render_template('Combat/Combat.html', area=combat, return_area=return_area, return_link=return_link, message=message, enemy_message=enemy_message, enemy=enemy, enemy_health=enemy_health, health=health)
+
+#Use Item Option
+@bp.route('<return_area>/combat_use_item')
+def combat_use_item(return_area):
+    enemy = Gothic_Flask.Map.combat.enemy
+    enemy_health = Gothic_Flask.Map.combat.enemy_health
+    enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+    health = Gothic_Flask.Characters.player.health
+
+    if Gothic_Flask.Items.life_bottle.amount > 0:
+        life_bottle_amount = Gothic_Flask.Items.life_bottle.amount
+    else:
+        life_bottle_amount = 0
+    if Gothic_Flask.Items.energy_vile.amount > 0:
+        energy_vile_amount = Gothic_Flask.Items.energy_vile.amount
+    else:
+        energy_vile_amount = 0
+
+    message = "Use what?"
+    return render_template('Combat/Combat_Use_Item.html', area=combat, return_area=return_area, message=message, enemy=enemy, enemy_health=enemy_health, health=health, life_bottle_amount=life_bottle_amount, energy_vile_amount=energy_vile_amount)
+
+#Using Life Bottle as item
+@bp.route('<return_area>/combat_use_item_life_bottle')
+def combat_use_item_life_bottle(return_area):
+    Gothic_Flask.Characters.player.health += 100
+    if Gothic_Flask.Characters.player.health > 100:
+        Gothic_Flask.Characters.player.health = 100
+    enemy = Gothic_Flask.Map.combat.enemy
+    enemy_health = Gothic_Flask.Map.combat.enemy_health
+    enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+    health = Gothic_Flask.Characters.player.health
+    enemy_attack = randint(1,2)
+    if enemy_attack > 1 and Gothic_Flask.Map.combat.enemy_health > 0:
+        if Gothic_Flask.Items.silver_shield.inInventory == True and Gothic_Flask.Items.silver_shield.durability > 0:
+            Gothic_Flask.Items.silver_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Silver Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.silver_shield.durability < 0:
+                Gothic_Flask.Items.silver_shield.durability = 0
+        elif Gothic_Flask.Items.copper_shield.inInventory == True and Gothic_Flask.Items.copper_shield.durability > 0:
+            Gothic_Flask.Items.copper_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Copper Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.copper_shield.durability < 0:
+                Gothic_Flask.Items.copper_shield.durability = 0
+        else:
+            Gothic_Flask.Characters.player.health -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            You took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+    else:
+        enemy_message = f"The {Gothic_Flask.Map.combat.enemy} misses."
+
+    if Gothic_Flask.Characters.player.health <= 0:
+        message = f"You have been slain by the {enemy}"
+        name = Gothic_Flask.Characters.player.name
+        return render_template('Death.html', area=combat, message=message, name=name)
+
+    message = "You used a Life Bottle"
+    return_link = f'game.{return_area}'
+    return render_template('Combat/Combat.html', area=combat, return_area=return_area, return_link=return_link, message=message, enemy_message=enemy_message, enemy=enemy, enemy_health=enemy_health, health=health)
+
+#Using Energy Vile as item
+@bp.route('<return_area>/combat_use_item_energy_vile')
+def combat_use_item_energy_vile(return_area):
+    Gothic_Flask.Characters.player.health += 50
+    if Gothic_Flask.Characters.player.health > 100:
+        Gothic_Flask.Characters.player.health = 100
+    enemy = Gothic_Flask.Map.combat.enemy
+    enemy_health = Gothic_Flask.Map.combat.enemy_health
+    enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+    health = Gothic_Flask.Characters.player.health
+    enemy_attack = randint(1,2)
+    if enemy_attack > 1 and Gothic_Flask.Map.combat.enemy_health > 0:
+        if Gothic_Flask.Items.silver_shield.inInventory == True and Gothic_Flask.Items.silver_shield.durability > 0:
+            Gothic_Flask.Items.silver_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Silver Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.silver_shield.durability < 0:
+                Gothic_Flask.Items.silver_shield.durability = 0
+        elif Gothic_Flask.Items.copper_shield.inInventory == True and Gothic_Flask.Items.copper_shield.durability > 0:
+            Gothic_Flask.Items.copper_shield.durability -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            Your Copper Shield took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+            if Gothic_Flask.Items.copper_shield.durability < 0:
+                Gothic_Flask.Items.copper_shield.durability = 0
+        else:
+            Gothic_Flask.Characters.player.health -= Gothic_Flask.Map.combat.enemy_attack
+            enemy_message = f"""The {Gothic_Flask.Map.combat.enemy} hits.
+            You took {Gothic_Flask.Map.combat.enemy_attack} damage."""
+    else:
+        enemy_message = f"The {Gothic_Flask.Map.combat.enemy} misses."
+
+    if Gothic_Flask.Characters.player.health <= 0:
+        message = f"You have been slain by the {enemy}"
+        name = Gothic_Flask.Characters.player.name
+        return render_template('Death.html', area=combat, message=message, name=name)
+
+    message = "You used an Energy Vile"
+    return_link = f'game.{return_area}'
+    return render_template('Combat/Combat.html', area=combat, return_area=return_area, return_link=return_link, message=message, enemy_message=enemy_message, enemy=enemy, enemy_health=enemy_health, health=health)
+
 #Gargoyle Shop
 @bp.route('<return_area>/gargoyle_shop')
 def gargoyle_shop(return_area):
@@ -476,6 +789,21 @@ def enterance_graveyard_loot():
 #Graves Graveyard Area
 @bp.route('/graves_graveyard')
 def graves_graveyard():
+    combat_chance = randint(1,2)
+    if combat_chance > 1 and Gothic_Flask.Map.combat.fought == False:
+        Gothic_Flask.Map.combat.fought = True
+        Gothic_Flask.Map.combat.enemy = Gothic_Flask.Characters.zombie.name
+        Gothic_Flask.Map.combat.enemy_health = Gothic_Flask.Characters.zombie.health
+        Gothic_Flask.Map.combat.enemy_attack = Gothic_Flask.Characters.zombie.damage
+        enemy = Gothic_Flask.Map.combat.enemy
+        enemy_health = Gothic_Flask.Map.combat.enemy_health
+        enemy_attack = Gothic_Flask.Map.combat.enemy_attack
+        health = Gothic_Flask.Characters.player.health
+        enemy_message = f"A {enemy} approaches"
+        message = "What will you do?"
+        return render_template('Combat/Combat.html', area=graves_graveyard, return_area='graves_graveyard', message=message, enemy_message=enemy_message, enemy=enemy, enemy_health=enemy_health)
+    Gothic_Flask.Map.combat.fought = False
+
     if Gothic_Flask.Map.graves_graveyard.looted:
         looted = True
     else:

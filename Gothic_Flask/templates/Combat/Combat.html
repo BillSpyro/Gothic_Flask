@@ -1,0 +1,25 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<nav>
+  <h1>-Combat-</h1>
+  <p>
+    {{ enemy_message }}
+  </p>
+  <ul>
+    <li>Enemy: {{ enemy }}</li>
+    <li>{{ enemy }} health: {{ enemy_health }}
+  </ul>
+  <p class="message">
+    {{ message }}
+  </p>
+  <ul>
+    <li>Health: {{ health }}</li>
+    {% if enemy_health > 0 %}
+    <li><a href="{{ url_for('game.combat_attack', return_area=return_area) }}"><input type="button" value="Attack"></a></li>
+    <li><a href="{{ url_for('game.combat_use_item', return_area=return_area) }}"><input type="button" value="Use Item"></a></li>
+    <li><a href="{{ url_for('game.combat', return_area=return_area) }}"><input type="button" value="Nothing"></a></li>
+    {% else %}
+    <li><a href="{{ url_for(return_link) }}"><input type="button" value="Continue"></a></li>
+    {% endif %}
+  </ul>
+</nav>

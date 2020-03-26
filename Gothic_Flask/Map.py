@@ -13,10 +13,12 @@ class area(object):
 
 #Combat System
 class Combat(area):
-    def __init__(self, enemy, area, fought):
+    def __init__(self, enemy, area, fought, enemy_health, enemy_attack):
         self.enemy = enemy
         self.area = area
         self.fought = fought
+        self.enemy_health = enemy_health
+        self.enemy_attack = enemy_attack
 
     def enter(self):
         while player.health > 0 and combat.enemy.health > 0:
@@ -212,7 +214,7 @@ class Combat(area):
         combat.fought = True
         return combat.area
 
-combat = Combat(0, 0, 0)
+combat = Combat(0, 0, 0, 0, 0)
 
 #Shop System
 class Gargoyle(area):
@@ -2053,7 +2055,7 @@ class Map(object):
         'intro': Intro(),
         'death': Death(),
         'gargoyle': Gargoyle(),
-        'combat': Combat(0, 0, 0),
+        'combat': Combat(0, 0, 0, 0, 0),
         'main_crypt': MainCrypt(),
         'statue_crypt': StatueCrypt(),
         'waterway_crypt': WaterwayCrypt(),
