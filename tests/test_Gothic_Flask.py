@@ -1,4 +1,5 @@
 from Gothic_Flask import create_app
+import Gothic_Flask.Map
 
 def test_config():
     assert not create_app().testing
@@ -11,6 +12,14 @@ def test_index(client):
 def test_death(client):
     response = client.get('/')
     assert b'Play' in response.data
+
+def test_combat(client):
+    Gothic_Flask.Map.combat.enemy = "Zombie"
+    Gothic_Flask.Map.combat.enemy_health = 20
+    response = client.get('/game/graves_graveyard/combat')
+    assert b'Attack' in response.data
+    assert b'Use Item' in response.data
+    assert b'Nothing' in response.data
 
 def test_intro(client):
     response = client.get('/game/intro')
@@ -73,6 +82,7 @@ def test_gargoyle_shop(client):
     assert b'Go back' in response.data
 
 def test_graves_graveyard(client):
+    Gothic_Flask.Map.combat.fought = True
     response = client.get('/game/graves_graveyard')
     assert b'Loot an open grave' in response.data
     assert b'Go to the large wooden gate' in response.data
