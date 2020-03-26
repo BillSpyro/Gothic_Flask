@@ -17,8 +17,11 @@ bp = Blueprint('game', __name__, url_prefix='/game')
 #Gothic.play()
 
 #Intro Area
-@bp.route('/intro')
+@bp.route('/intro', methods=('GET', 'POST'))
 def intro():
+    if not Gothic_Flask.Characters.player.name:
+        Gothic_Flask.Characters.player.name = "Player"
+    name = Gothic_Flask.Characters.player.name
     Gothic_Flask.Characters.player.health = 100
     Gothic_Flask.Characters.player.gold = 0
     Gothic_Flask.Items.copper_shield.inInventory = False
@@ -35,11 +38,17 @@ def intro():
     Gothic_Flask.Items.skull_key.inInventory = False
     Gothic_Flask.Map.enterance_graveyard.looted = False
     Gothic_Flask.Map.graves_graveyard.looted = False
-    return render_template('Intro.html', area=intro)
+    if request.method == 'POST':
+        Gothic_Flask.Characters.player.name = request.form['name']
+        if not name:
+            Gothic_Flask.Characters.player.name = "Player"
+        return redirect(url_for('game.intro'))
+    return render_template('Intro.html', area=intro, name=name)
 
 #Death Screen
 @bp.route('/death')
 def death():
+    Gothic_Flask.Characters.player.name = "Player"
     Gothic_Flask.Characters.player.health = 100
     Gothic_Flask.Characters.player.gold = 0
     Gothic_Flask.Items.copper_shield.inInventory = False
@@ -105,8 +114,9 @@ def inventory(return_area):
         energy_vile_amount = Gothic_Flask.Items.energy_vile.amount
     else:
         energy_vile_amount = 0
+    name = Gothic_Flask.Characters.player.name
     return_link = f'game.{return_area}'
-    return render_template('Inventory.html', area=inventory, return_area=return_area, return_link=return_link, health=health, gold=gold, copper_shield=copper_shield, copper_shield_durability=copper_shield_durability , silver_shield=silver_shield, silver_shield_durability=silver_shield_durability , small_sword=small_sword, club=club, war_hammer=war_hammer, crypt_key=crypt_key, graveyard_key=graveyard_key, skull_key=skull_key, life_bottle_amount=life_bottle_amount, energy_vile_amount=energy_vile_amount)
+    return render_template('Inventory.html', area=inventory, return_area=return_area, return_link=return_link, health=health, gold=gold, copper_shield=copper_shield, copper_shield_durability=copper_shield_durability , silver_shield=silver_shield, silver_shield_durability=silver_shield_durability , small_sword=small_sword, club=club, war_hammer=war_hammer, crypt_key=crypt_key, graveyard_key=graveyard_key, skull_key=skull_key, life_bottle_amount=life_bottle_amount, energy_vile_amount=energy_vile_amount, name=name)
 
 #Gargoyle Shop
 @bp.route('<return_area>/gargoyle_shop')
@@ -338,7 +348,8 @@ def statue_crypt_desecrate_the_statue():
         but while trying, a piece of the statue fell off
         and hit you smack in the skull, causing it to
         explode into tiny pieces."""
-        return render_template('Death.html', area=death, message=message)
+        name = Gothic_Flask.Characters.player.name
+        return render_template('Death.html', area=death, message=message, name=name)
     elif chance == 2:
         message = "Your attempt at destorying the statue was to no avail."
     else:
@@ -375,7 +386,8 @@ def waterway_crypt_swim():
     message = """You jump right into the water. But have you forgotten?
     You are only just a skeleton and bouyancy is a problem
     for the undead. You then proceed to drown."""
-    return render_template('Death.html', area=waterway_crypt, message=message)
+    name = Gothic_Flask.Characters.player.name
+    return render_template('Death.html', area=waterway_crypt, message=message, name=name)
 
 #Looking in the water action
 @bp.route('/waterway_crypt/look')
@@ -390,7 +402,8 @@ def waterway_crypt_look():
         message = """While trying to fish something out of the water,
         something grabs your boney hand and drags you in.
         You then proceed to drown."""
-        return render_template('Death.html', area=death, message=message)
+        name = Gothic_Flask.Characters.player.name
+        return render_template('Death.html', area=death, message=message, name=name)
     elif chance == 2:
         message = "You find nothing."
     else:
@@ -427,7 +440,8 @@ def gate_crypt_use():
     your skull on the lock. After banging too many
     times your skull has exploded into a million
     tiny pieces."""
-    return render_template('death.html', area=death, message=message)
+    name = Gothic_Flask.Characters.player.name
+    return render_template('death.html', area=death, message=message, name=name)
 
 #Crypt Graveyard Area
 @bp.route('/crypt_graveyard')

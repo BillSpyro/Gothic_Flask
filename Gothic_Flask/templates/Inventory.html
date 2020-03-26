@@ -1,7 +1,7 @@
 <!doctype html>
 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 <nav>
-  <h1>-Inventory-</h1>
+  <h1>-{{ name }}'s Inventory-</h1>
   <ul>
     <li><a href="{{ url_for(return_link) }}"><input type="button" value="Go back"></a></li>
     <li>Health: {{ health }}</li>
