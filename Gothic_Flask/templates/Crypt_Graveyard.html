@@ -21,4 +21,4 @@
     <li><a href="{{ url_for('game.gate_crypt') }}"><input type="button" value=" Go back into the crypt"></a></li>
   </ul>
 </nav>
-<a href="{{ url_for('game.inventory') }}"><input type="button" value="Inventory"></a>
+<a href="{{ url_for('game.inventory', return_area='crypt_graveyard') }}"><input type="button" value="Inventory"></a>

@@ -59,8 +59,8 @@ def death():
     return render_template('Game.html', area=death)
 
 #Inventory Screen
-@bp.route('/Inventory')
-def inventory():
+@bp.route('<return_area>/Inventory')
+def inventory(return_area):
     health = Gothic_Flask.Characters.player.health
     gold = Gothic_Flask.Characters.player.gold
     copper_shield_durability = Gothic_Flask.Items.copper_shield.durability
@@ -105,7 +105,8 @@ def inventory():
         energy_vile_amount = Gothic_Flask.Items.energy_vile.amount
     else:
         energy_vile_amount = 0
-    return render_template('Inventory.html', area=inventory, health=health, gold=gold, copper_shield=copper_shield, silver_shield=silver_shield, small_sword=small_sword, club=club, war_hammer=war_hammer, crypt_key=crypt_key, graveyard_key=graveyard_key, skull_key=skull_key, life_bottle_amount=life_bottle_amount, energy_vile_amount=energy_vile_amount)
+    return_link = f'game.{return_area}'
+    return render_template('Inventory.html', area=inventory, return_area=return_area, return_link=return_link, health=health, gold=gold, copper_shield=copper_shield, copper_shield_durability=copper_shield_durability , silver_shield=silver_shield, silver_shield_durability=silver_shield_durability , small_sword=small_sword, club=club, war_hammer=war_hammer, crypt_key=crypt_key, graveyard_key=graveyard_key, skull_key=skull_key, life_bottle_amount=life_bottle_amount, energy_vile_amount=energy_vile_amount)
 
 #Gargoyle Shop
 @bp.route('<return_area>/gargoyle_shop')

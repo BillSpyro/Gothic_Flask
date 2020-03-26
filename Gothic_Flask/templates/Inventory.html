@@ -3,6 +3,7 @@
 <nav>
   <h1>-Inventory-</h1>
   <ul>
+    <li><a href="{{ url_for(return_link) }}"><input type="button" value="Go back"></a></li>
     <li>Health: {{ health }}</li>
     <li>Gold: {{ gold }}</li>
     {% if copper_shield %}
