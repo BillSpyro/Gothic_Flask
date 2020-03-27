@@ -802,13 +802,20 @@ def graves_graveyard():
         enemy_message = f"A {enemy} approaches"
         message = "What will you do?"
         return render_template('Combat/Combat.html', area=graves_graveyard, return_area='graves_graveyard', message=message, enemy_message=enemy_message, enemy=enemy, enemy_health=enemy_health)
+
+    if Gothic_Flask.Map.combat.enemy_health >= 0 and Gothic_Flask.Map.combat.fought == True:
+        gold_yield = randint(20, 100)
+        Gothic_Flask.Characters.player.gold += gold_yield
+        message = f"You've gotten {gold_yield} gold for slaying the {Gothic_Flask.Map.combat.enemy}"
+    else:
+        message = "What will you do?"
+
     Gothic_Flask.Map.combat.fought = False
 
     if Gothic_Flask.Map.graves_graveyard.looted:
         looted = True
     else:
         looted = False
-    message = "What will you do?"
     return render_template('Graves_Graveyard.html', area=graves_graveyard, message=message, looted=looted)
 
 #Looting an open grave action
